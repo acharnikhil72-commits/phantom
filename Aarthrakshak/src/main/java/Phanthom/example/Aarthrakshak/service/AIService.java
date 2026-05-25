@@ -1,7 +1,7 @@
 package Phanthom.example.Aarthrakshak.service;
 
+import Phanthom.example.Aarthrakshak.config.GroqClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AIService {
 
-    private final ChatClient chatClient;
+    private final GroqClient groqClient;  // 👈 only change here
 
     // WHY explainer
     public String explainFraud(String merchant, Double amount,
@@ -26,7 +26,7 @@ public class AIService {
                 """.formatted(merchant, amount, country,
                 String.join(", ", reasons));
 
-        return chatClient.prompt(prompt).call().content();
+        return groqClient.chat(prompt);  // 👈 only change here
     }
 
     // Health score
@@ -45,7 +45,7 @@ public class AIService {
                 }
                 """.formatted(archetype, spendingSummary);
 
-        return chatClient.prompt(prompt).call().content();
+        return groqClient.chat(prompt);  // 👈 only change here
     }
 
     // What-if simulator
@@ -64,6 +64,6 @@ public class AIService {
                 }
                 """.formatted(savingsGoal, months, monthlySpend);
 
-        return chatClient.prompt(prompt).call().content();
+        return groqClient.chat(prompt);  // 👈 only change here
     }
 }
